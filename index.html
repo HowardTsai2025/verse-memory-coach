@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f3f1eb">
+  <title>默經記憶吐司｜個人化默經訓練</title>
+  <script>
+    document.documentElement.dataset.theme=localStorage.getItem("verseMemoryCoach.theme")
+      ||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+  </script>
+  <link rel="stylesheet" href="styles.css?v=18">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">2026 半年度訓練</p>
+        <h1>默經記憶吐司</h1>
+      </div>
+      <div class="top-actions">
+        <button id="themeToggle" class="theme-toggle" type="button">深色模式</button>
+        <button id="resetBtn" class="danger hidden">清除學習紀錄</button>
+      </div>
+    </header>
+
+    <section id="onboarding" class="panel hero">
+      <div class="hero-mark">📖</div>
+      <h2>每天一小步，36節牢牢記住</h2>
+      <p class="welcome-verse">
+        耶和華萬軍之神阿，我得著你的言語，就當食物喫了；你的言語成了我心中的歡喜快樂；因我是稱為你名下的人。
+        <cite>耶利米書 15:16</cite>
+      </p>
+      <label>暱稱
+        <input id="nickname" maxlength="18">
+      </label>
+      <label>目標卷別
+        <select id="paper">
+          <option value="A">A卷｜克漏字</option>
+          <option value="B">B卷｜段落填空</option>
+          <option value="C">C卷｜中文全默</option>
+          <option value="D">D卷｜英文全默</option>
+        </select>
+      </label>
+      <label>每天練習時間
+        <select id="minutes">
+          <option value="5">5分鐘</option>
+          <option value="10" selected>10分鐘</option>
+          <option value="15">15分鐘</option>
+          <option value="20">20分鐘</option>
+        </select>
+      </label>
+      <button id="startBtn" class="primary">贖回光陰</button>
+    </section>
+
+    <section id="dashboard" class="hidden">
+      <div class="welcome-row">
+        <div>
+          <p class="eyebrow">歡迎回來</p>
+          <h2 id="welcomeName"></h2>
+        </div>
+        <div class="paper-controls">
+          <span id="paperBadge" class="paper-display" aria-label="目前卷別"></span>
+          <button id="switchPaperBtn" class="ghost" type="button">切換卷別</button>
+        </div>
+      </div>
+
+      <div class="stats">
+        <article><strong id="streakStat">0</strong><span>連續天數</span></article>
+        <article><strong id="masteredStat">0/36</strong><span>熟練經節</span></article>
+      </div>
+
+      <section class="panel daily">
+        <div class="section-title">
+          <div><p class="eyebrow">今日任務</p><h3 id="dailyTitle">10分鐘個人化練習</h3></div>
+          <span id="readiness" class="readiness">準備度 0%</span>
+        </div>
+        <div class="daily-minutes">
+          <span>今日練習時間</span>
+          <div id="dailyMinuteOptions" class="minute-options" role="group" aria-label="選擇今日練習時間">
+            <button type="button" data-daily-minutes="5">5分鐘</button>
+            <button type="button" data-daily-minutes="10">10分鐘</button>
+            <button type="button" data-daily-minutes="15">15分鐘</button>
+            <button type="button" data-daily-minutes="20">20分鐘</button>
+          </div>
+        </div>
+        <div class="progress"><span id="progressBar"></span></div>
+        <p id="dailyHint">先完成診斷，系統就能找出你最需要加強的經節。</p>
+        <button id="practiceBtn" class="primary">開始今日練習</button>
+      </section>
+
+      <section class="panel">
+        <div class="section-title"><h3>36節經文</h3></div>
+        <div id="verseGrid" class="verse-grid"></div>
+      </section>
+    </section>
+
+    <section id="quiz" class="panel hidden">
+      <div class="quiz-head">
+        <div><p id="quizMode" class="eyebrow"></p><h2 id="quizRef"></h2></div>
+        <div class="quiz-controls">
+          <span id="quizCounter" class="badge"></span>
+          <button id="exitQuizBtn" class="exit-quiz" type="button">離開練習</button>
+        </div>
+      </div>
+      <p id="quizPrompt" class="prompt"></p>
+      <p id="answerGuide" class="answer-guide"></p>
+      <div id="answerFields" class="answer-fields"></div>
+      <div id="feedback" class="feedback hidden"></div>
+      <div class="actions">
+        <button id="hintBtn" class="ghost">提示一字</button>
+        <button id="submitBtn" class="primary">檢查答案</button>
+        <button id="nextBtn" class="primary hidden">下一題</button>
+      </div>
+    </section>
+
+    <section id="complete" class="panel complete hidden">
+      <div class="hero-mark">✨</div>
+      <h2>今日任務完成</h2>
+      <div class="stats">
+        <article><strong id="sessionAccuracy">0%</strong><span>獨立答對率</span></article>
+        <article><strong id="sessionReviewed">0</strong><span>練習經節</span></article>
+      </div>
+      <button id="backBtn" class="primary">回到首頁</button>
+    </section>
+  </main>
+
+  <dialog id="verseDialog" class="verse-dialog" aria-labelledby="verseDialogReference">
+    <div class="dialog-heading">
+      <div>
+        <p id="verseDialogLesson" class="eyebrow"></p>
+        <h2 id="verseDialogReference"></h2>
+      </div>
+      <button id="closeVerseDialog" class="dialog-close" type="button" aria-label="關閉完整經文">×</button>
+    </div>
+    <p id="verseDialogText" class="dialog-verse"></p>
+  </dialog>
+
+  <dialog id="paperDialog" class="paper-dialog" aria-labelledby="paperDialogTitle">
+    <div class="dialog-heading">
+      <div>
+        <p class="eyebrow">選擇練習內容</p>
+        <h2 id="paperDialogTitle">切換卷別</h2>
+      </div>
+      <button id="closePaperDialog" class="dialog-close" type="button" aria-label="關閉卷別選擇">×</button>
+    </div>
+    <p class="dialog-intro">各卷的程度、錯題與練習紀錄會分開保存。</p>
+    <div id="paperOptions" class="paper-options"></div>
+  </dialog>
+
+  <script src="data/verses.js"></script>
+  <script src="data/verses-en.js"></script>
+  <script src="app.js?v=22"></script>
+</body>
+</html>
