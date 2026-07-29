@@ -100,11 +100,18 @@ function newState(nickname,paper,minutes){
   return {nickname,paper,defaultMinutes:initialMinutes,streak:0,lastStudy:null,
     papers:{[paper]:{minutes:initialMinutes,progress:createProgress()}}};
 }
-function show(id){["onboarding","dashboard","quiz","complete"].forEach(x=>$("#"+x).classList.toggle("hidden",x!==id));}
+function show(id){
+  ["onboarding","dashboard","quiz","complete"].forEach(x=>$("#"+x).classList.toggle("hidden",x!==id));
+  $("#switchPaperBtn").classList.toggle("hidden",id!=="dashboard");
+}
 function updateThemeToggle(){
   const isDark=document.documentElement.dataset.theme==="dark";
-  $("#themeToggle").textContent=isDark?"淺色模式":"深色模式";
-  $("#themeToggle").setAttribute("aria-pressed",String(isDark));
+  const toggle=$("#themeToggle");
+  const label=isDark?"切換成淺色模式":"切換成深色模式";
+  toggle.setAttribute("aria-label",label);
+  toggle.setAttribute("title",label);
+  toggle.setAttribute("aria-pressed",String(isDark));
+  toggle.querySelector(".sr-only").textContent=label;
   document.querySelector('meta[name="theme-color"]').content=isDark?"#1c211e":"#f3f1eb";
 }
 function toggleTheme(){
@@ -253,7 +260,7 @@ function renderQuestion(){
   }).join("");
   updateAnswerGuide();
   updateHintButton();
-  $("#feedback").className="feedback hidden";
+  $("#answerResult").className="answer-result hidden";
   $("#submitBtn").classList.remove("hidden"); $("#nextBtn").classList.add("hidden");
 }
 function updateAnswerGuide(){
@@ -317,10 +324,10 @@ function score(){
   else if(pass){p.needsReview=true;}
   else{p.level=Math.max(0,p.level-1);p.needsReview=true;}
   session.answered=true;
-  $("#feedback").className=`feedback ${pass?"good":"bad"}`;
+  $("#answerResult").className=`answer-result ${pass?"result-correct":"result-review"}`;
   const wrongGroups=results.map((correct,index)=>correct?null:index+1).filter(Boolean);
   const resultTitle=independentPass?"完全正確！":pass?"答對了，但本題使用過提示":`第 ${wrongGroups.join("、")} 組需要修正`;
-  $("#feedback").innerHTML=`<strong>${resultTitle}</strong><br>${pass&&session.hintUsed?"這一節會安排再次複習。<br>":""}<span>正確經文：${getVerseText(v)}</span>`;
+  $("#answerResult").innerHTML=`<strong>${resultTitle}</strong><br>${pass&&session.hintUsed?"這一節會安排再次複習。<br>":""}<span>正確經文：${getVerseText(v)}</span>`;
   $("#hintBtn").disabled=true;
   $("#submitBtn").classList.add("hidden"); $("#nextBtn").classList.remove("hidden");
 }

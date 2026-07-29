@@ -9,7 +9,7 @@
     document.documentElement.dataset.theme=localStorage.getItem("verseMemoryCoach.theme")
       ||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
   </script>
-  <link rel="stylesheet" href="styles.css?v=18">
+  <link rel="stylesheet" href="styles.css?v=29">
 </head>
 <body>
   <main class="app-shell">
@@ -19,7 +19,17 @@
         <h1>默經記憶吐司</h1>
       </div>
       <div class="top-actions">
-        <button id="themeToggle" class="theme-toggle" type="button">深色模式</button>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="切換成深色模式" title="切換成深色模式">
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.3 15.2A8.5 8.5 0 0 1 8.8 3.7a8.5 8.5 0 1 0 11.5 11.5Z"></path>
+          </svg>
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <span class="sr-only">切換成深色模式</span>
+        </button>
+        <button id="switchPaperBtn" class="ghost hidden" type="button">切換卷別</button>
         <button id="resetBtn" class="danger hidden">清除學習紀錄</button>
       </div>
     </header>
@@ -54,14 +64,13 @@
     </section>
 
     <section id="dashboard" class="hidden">
+      <div class="paper-context">
+        <span id="paperBadge" class="paper-display" aria-label="目前卷別"></span>
+      </div>
       <div class="welcome-row">
         <div>
           <p class="eyebrow">歡迎回來</p>
           <h2 id="welcomeName"></h2>
-        </div>
-        <div class="paper-controls">
-          <span id="paperBadge" class="paper-display" aria-label="目前卷別"></span>
-          <button id="switchPaperBtn" class="ghost" type="button">切換卷別</button>
         </div>
       </div>
 
@@ -99,14 +108,14 @@
       <div class="quiz-head">
         <div><p id="quizMode" class="eyebrow"></p><h2 id="quizRef"></h2></div>
         <div class="quiz-controls">
-          <span id="quizCounter" class="badge"></span>
           <button id="exitQuizBtn" class="exit-quiz" type="button">離開練習</button>
+          <span id="quizCounter" class="badge"></span>
         </div>
       </div>
       <p id="quizPrompt" class="prompt"></p>
       <p id="answerGuide" class="answer-guide"></p>
       <div id="answerFields" class="answer-fields"></div>
-      <div id="feedback" class="feedback hidden"></div>
+      <div id="answerResult" class="answer-result hidden" role="status" aria-live="polite"></div>
       <div class="actions">
         <button id="hintBtn" class="ghost">提示一字</button>
         <button id="submitBtn" class="primary">檢查答案</button>
@@ -150,6 +159,6 @@
 
   <script src="data/verses.js"></script>
   <script src="data/verses-en.js"></script>
-  <script src="app.js?v=22"></script>
+  <script src="app.js?v=27"></script>
 </body>
 </html>
