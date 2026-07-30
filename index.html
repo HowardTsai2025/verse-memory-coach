@@ -9,12 +9,12 @@
     document.documentElement.dataset.theme=localStorage.getItem("verseMemoryCoach.theme")
       ||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
   </script>
-  <link rel="stylesheet" href="styles.css?v=29">
+  <link rel="stylesheet" href="styles.css?v=35">
 </head>
 <body>
   <main class="app-shell">
     <header class="topbar">
-      <div>
+      <div class="brand-block">
         <p class="eyebrow">2026 半年度訓練</p>
         <h1>默經記憶吐司</h1>
       </div>
@@ -31,6 +31,17 @@
         </button>
         <button id="switchPaperBtn" class="ghost hidden" type="button">切換卷別</button>
         <button id="resetBtn" class="danger hidden">清除學習紀錄</button>
+      </div>
+      <div id="dashboardIdentity" class="dashboard-identity hidden">
+        <div class="paper-context">
+          <span id="paperBadge" class="paper-display" aria-label="目前卷別"></span>
+        </div>
+        <div class="welcome-row">
+          <div>
+            <p class="eyebrow">歡迎回來</p>
+            <h2 id="welcomeName"></h2>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -64,16 +75,6 @@
     </section>
 
     <section id="dashboard" class="hidden">
-      <div class="paper-context">
-        <span id="paperBadge" class="paper-display" aria-label="目前卷別"></span>
-      </div>
-      <div class="welcome-row">
-        <div>
-          <p class="eyebrow">歡迎回來</p>
-          <h2 id="welcomeName"></h2>
-        </div>
-      </div>
-
       <div class="stats">
         <article><strong id="streakStat">0</strong><span>連續天數</span></article>
         <article><strong id="masteredStat">0/36</strong><span>熟練經節</span></article>
@@ -159,6 +160,6 @@
 
   <script src="data/verses.js"></script>
   <script src="data/verses-en.js"></script>
-  <script src="app.js?v=27"></script>
+  <script src="app.js?v=28"></script>
 </body>
 </html>

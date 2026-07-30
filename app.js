@@ -103,6 +103,7 @@ function newState(nickname,paper,minutes){
 function show(id){
   ["onboarding","dashboard","quiz","complete"].forEach(x=>$("#"+x).classList.toggle("hidden",x!==id));
   $("#switchPaperBtn").classList.toggle("hidden",id!=="dashboard");
+  $("#dashboardIdentity").classList.toggle("hidden",id!=="dashboard");
 }
 function updateThemeToggle(){
   const isDark=document.documentElement.dataset.theme==="dark";
