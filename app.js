@@ -53,6 +53,18 @@ const punctuation = /[，。；：、？！「」『』（）()“”"'﹐,.;:!?
 const escapeHtml = s => s.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const blankCell = (segment,offset) => `<span class="blank-cell" data-blank-segment="${segment}" data-blank-offset="${offset}" aria-hidden="true"></span>`;
 const eligibleIndexes = text => [...text].map((char,index) => punctuation.test(char) ? null : index).filter(index => index !== null);
+const highlightAnswerText = (text,hiddenIndexes) => {
+  let html="";
+  let highlighting=false;
+  [...text].forEach((char,index)=>{
+    const shouldHighlight=hiddenIndexes.has(index)&&!punctuation.test(char);
+    if(shouldHighlight&&!highlighting){html+='<mark class="answer-highlight">';highlighting=true;}
+    if(!shouldHighlight&&highlighting){html+="</mark>";highlighting=false;}
+    html+=escapeHtml(char);
+  });
+  if(highlighting)html+="</mark>";
+  return html;
+};
 const getVerseText = verse => state.paper==="D" ? ENGLISH_VERSES[verse.id].text : verse.text;
 const chineseBookNames = {
   "太":"馬太福音","林前":"哥林多前書","彼前":"彼得前書","約壹":"約翰一書",
@@ -92,7 +104,7 @@ const buildPrompt = (text,hiddenIndexes) => {
     }
   });
   if(insideHidden)segments.push(current);
-  return {html,segments};
+  return {html,segments,resultHtml:highlightAnswerText(text,hiddenIndexes)};
 };
 
 function newState(nickname,paper,minutes){
@@ -102,6 +114,7 @@ function newState(nickname,paper,minutes){
 }
 function show(id){
   ["onboarding","dashboard","quiz","complete"].forEach(x=>$("#"+x).classList.toggle("hidden",x!==id));
+  document.body.dataset.view=id;
   $("#switchPaperBtn").classList.toggle("hidden",id!=="dashboard");
   $("#dashboardIdentity").classList.toggle("hidden",id!=="dashboard");
 }
@@ -198,7 +211,8 @@ function makePrompt(v){
       html:`<span class="english-first-word">${escapeHtml(firstWord)}</span><span class="english-revealed" aria-live="polite"></span><span class="english-blank-line" aria-hidden="true"></span>`,
       segments:[remainder],
       hintMode:"word",
-      hintUnits:remainder.split(/\s+/).filter(Boolean)
+      hintUnits:remainder.split(/\s+/).filter(Boolean),
+      resultHtml:`${escapeHtml(firstWord)}${remainder?` <mark class="answer-highlight">${escapeHtml(remainder)}</mark>`:""}`
     };
   }
   let hiddenIndexes;
@@ -328,7 +342,8 @@ function score(){
   $("#answerResult").className=`answer-result ${pass?"result-correct":"result-review"}`;
   const wrongGroups=results.map((correct,index)=>correct?null:index+1).filter(Boolean);
   const resultTitle=independentPass?"完全正確！":pass?"答對了，但本題使用過提示":`第 ${wrongGroups.join("、")} 組需要修正`;
-  $("#answerResult").innerHTML=`<strong>${resultTitle}</strong><br>${pass&&session.hintUsed?"這一節會安排再次複習。<br>":""}<span>正確經文：${getVerseText(v)}</span>`;
+  const correctVerseHtml=session.currentPrompt.resultHtml||escapeHtml(getVerseText(v));
+  $("#answerResult").innerHTML=`<strong>${resultTitle}</strong><br>${pass&&session.hintUsed?"這一節會安排再次複習。<br>":""}<span class="correct-verse">正確經文：${correctVerseHtml}</span>`;
   $("#hintBtn").disabled=true;
   $("#submitBtn").classList.add("hidden"); $("#nextBtn").classList.remove("hidden");
 }

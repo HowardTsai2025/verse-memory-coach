@@ -22,6 +22,8 @@
   --paper-bg:#e1ebf0;
   --paper-text:#5b88a3;
   --paper-border:#bfd1da;
+  --answer-highlight-bg:#dcebf2;
+  --answer-highlight-text:#416f88;
   --neutral-soft:#e8e7e2;
   --neutral-text:#626660;
   --neutral-border:#d5d4ce;
@@ -59,6 +61,8 @@
   --paper-bg:#34434b;
   --paper-text:#a9c9d9;
   --paper-border:#536b77;
+  --answer-highlight-bg:#354a56;
+  --answer-highlight-text:#c0deec;
   --neutral-soft:#353936;
   --neutral-text:#c1c5c0;
   --neutral-border:#4b514d;
@@ -393,18 +397,39 @@ textarea{resize:vertical;line-height:1.7}
 .answer-field textarea.field-wrong{border-color:var(--bad);background:var(--bad-soft)}
 .actions button{width:auto;flex:1;margin-top:12px}
 .actions button:disabled{cursor:not-allowed;opacity:.55}
-.quiz-controls{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.quiz-head>div:first-child{min-width:0}
+.quiz-controls{
+  display:flex;
+  flex:0 0 auto;
+  align-items:center;
+  justify-content:flex-end;
+  gap:8px;
+  white-space:nowrap;
+}
 .exit-quiz{
+  flex:0 0 auto;
   padding:8px 11px;
   border:1px solid var(--danger-border);
   background:var(--danger-bg);
   color:var(--danger-text);
   font-size:.82rem;
+  white-space:nowrap;
 }
+.quiz-controls .badge{flex:0 0 auto;white-space:nowrap}
 .exit-quiz:hover,.exit-quiz:focus-visible{outline:2px solid var(--danger-border);outline-offset:1px}
 .answer-result{margin-top:14px;padding:14px;border-radius:14px;line-height:1.7}
 .answer-result.result-correct{background:var(--good-soft);color:var(--good)}
 .answer-result.result-review{background:var(--bad-soft);color:var(--bad)}
+.correct-verse{display:inline}
+.answer-highlight{
+  padding:.04em .12em;
+  border-radius:4px;
+  background:var(--answer-highlight-bg);
+  color:var(--answer-highlight-text);
+  font-weight:900;
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone;
+}
 .complete{text-align:center}
 .english-first-word{font-weight:800}
 .english-revealed{color:var(--bad)}
@@ -504,6 +529,10 @@ textarea{resize:vertical;line-height:1.7}
     grid-row:3;
     width:132px;
     margin-top:0;
+  }
+  body[data-view="quiz"] .top-actions #resetBtn{
+    grid-row:1;
+    align-self:center;
   }
   .dashboard-identity{
     display:contents;
