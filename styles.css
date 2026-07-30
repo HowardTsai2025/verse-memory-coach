@@ -189,12 +189,30 @@ textarea{resize:vertical;line-height:1.7}
   padding:0;
   border-radius:50%;
 }
+.top-actions .icon-action{
+  display:grid;
+  place-items:center;
+  width:44px;
+  min-width:44px;
+  height:44px;
+  flex:0 0 44px;
+  padding:0;
+}
 .theme-icon{
   width:21px;
   height:21px;
   fill:none;
   stroke:currentColor;
   stroke-width:1.9;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.action-icon{
+  width:21px;
+  height:21px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
   stroke-linecap:round;
   stroke-linejoin:round;
 }
@@ -235,6 +253,8 @@ textarea{resize:vertical;line-height:1.7}
 }
 .danger:hover,.danger:focus-visible{outline:2px solid var(--danger-border);outline-offset:2px}
 .hidden{display:none!important}
+.verse-section-title{height:40px;align-items:flex-start}
+.verse-section-title>.eyebrow{margin:0}
 .privacy{font-size:.8rem;color:var(--muted);margin:14px 0 0}
 .badge,.readiness{
   padding:7px 11px;
@@ -526,9 +546,9 @@ textarea{resize:vertical;line-height:1.7}
   .topbar{
     position:relative;
     display:grid;
-    grid-template-columns:minmax(0,1fr) 132px;
+    grid-template-columns:minmax(0,1fr) auto;
     grid-template-areas:none;
-    column-gap:16px;
+    column-gap:10px;
     row-gap:10px;
     align-items:start;
   }
@@ -541,31 +561,26 @@ textarea{resize:vertical;line-height:1.7}
   }
   .topbar h1{margin-bottom:0}
   .top-actions{
-    display:contents;
+    display:flex;
+    grid-column:2;
+    grid-row:1;
+    justify-self:end;
+    align-self:center;
+    gap:10px;
   }
   .top-actions .theme-toggle{
     position:static;
-    grid-column:2;
-    grid-row:1;
-    align-self:center;
-    justify-self:start;
-    transform:translateX(-58px);
+    transform:none;
   }
   .top-actions #switchPaperBtn{
-    grid-column:2;
-    grid-row:2;
-    width:132px;
+    width:44px;
     margin-top:0;
+    transform:none;
   }
   .top-actions #resetBtn{
-    grid-column:2;
-    grid-row:3;
-    width:132px;
+    width:44px;
     margin-top:0;
-  }
-  body[data-view="quiz"] .top-actions #resetBtn{
-    grid-row:1;
-    align-self:center;
+    transform:none;
   }
   .dashboard-identity{
     display:contents;

@@ -16,7 +16,7 @@
   <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
-  <link rel="stylesheet" href="styles.css?v=49">
+  <link rel="stylesheet" href="styles.css?v=52">
 </head>
 <body>
   <main class="app-shell">
@@ -36,8 +36,23 @@
           </svg>
           <span class="sr-only">切換成深色模式</span>
         </button>
-        <button id="switchPaperBtn" class="ghost hidden" type="button">切換卷別</button>
-        <button id="resetBtn" class="danger hidden">清除學習紀錄</button>
+        <button id="switchPaperBtn" class="ghost icon-action hidden" type="button" aria-label="切換卷別" title="切換卷別">
+          <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 4h12a2 2 0 0 1 0 4H6a2 2 0 0 1 0-4Z"></path>
+            <path d="M6 16h12a2 2 0 0 1 0 4H6a2 2 0 0 1 0-4Z"></path>
+            <path d="M7 8v8M17 8v8"></path>
+          </svg>
+          <span class="sr-only">切換卷別</span>
+        </button>
+        <button id="resetBtn" class="danger icon-action hidden" type="button" aria-label="清除學習紀錄" title="清除學習紀錄">
+          <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7h16"></path>
+            <path d="M9 7V4h6v3"></path>
+            <path d="M6.5 7l.8 13h9.4l.8-13"></path>
+            <path d="M10 11v5M14 11v5"></path>
+          </svg>
+          <span class="sr-only">清除學習紀錄</span>
+        </button>
       </div>
       <div id="dashboardIdentity" class="dashboard-identity hidden">
         <div class="paper-context">
@@ -107,7 +122,7 @@
       </section>
 
       <section class="panel">
-        <div class="section-title"><h3>36節經文</h3></div>
+        <div class="section-title verse-section-title"><h3 class="eyebrow">36節經文</h3></div>
         <div id="verseGrid" class="verse-grid"></div>
       </section>
     </section>
