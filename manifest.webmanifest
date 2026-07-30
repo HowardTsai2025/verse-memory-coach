@@ -1,0 +1,22 @@
+{
+  "name": "默經記憶吐司｜個人化默經訓練",
+  "short_name": "默經記憶吐司",
+  "description": "依個人程度安排的默經訓練工具。",
+  "lang": "zh-Hant",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f3f1eb",
+  "theme_color": "#60786a",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
