@@ -144,3 +144,66 @@ window.ENGLISH_VERSES = {
     "text": "Therefore take up the whole armor of God that you may be able to withstand in the evil day, and having done all, to stand."
   }
 };
+
+window.ENGLISH_VERSE_TOPICS = [
+  {
+    "label": "Message One",
+    "title": "Disciples, Believers, Saints, and Christians",
+    "verseIds": [1, 2, 3]
+  },
+  {
+    "label": "Message Two",
+    "title": "The Eternal Life—the Life of God with the Divine Nature, the Triune God Being the Structure of the Bible, and the Hidden God, a God Who Hides Himself",
+    "verseIds": [4, 5, 6]
+  },
+  {
+    "label": "Message Three",
+    "title": "Seed, the Salt of the Earth, the Light of the World, and the Fishers of Men",
+    "verseIds": [7, 8, 9]
+  },
+  {
+    "label": "Message Four",
+    "title": "Heirs of God",
+    "verseIds": [10, 11, 12]
+  },
+  {
+    "label": "Message Five",
+    "title": "Living Stones and Sheep",
+    "verseIds": [13, 14, 15]
+  },
+  {
+    "label": "Message Six",
+    "title": "Brothers of Christ as the Firstborn Son of God",
+    "verseIds": [16, 17, 18]
+  },
+  {
+    "label": "Message Seven",
+    "title": "Vessels of Mercy unto Honor and Glory, Grains of Wheat, and Branches of the Vine",
+    "verseIds": [19, 20, 21]
+  },
+  {
+    "label": "Message Eight",
+    "title": "Knowing and Experiencing the All-inclusive Christ in Matthew",
+    "verseIds": [22, 23, 24]
+  },
+  {
+    "label": "Message Nine",
+    "title": "Pillars and Luminaries",
+    "verseIds": [25, 26, 27]
+  },
+  {
+    "label": "Message Ten",
+    "title": "Being Conformed to Christ’s Death And Attaining to the Out-resurrection",
+    "verseIds": [28, 29, 30]
+  },
+  {
+    "label": "Message Eleven",
+    "title": "Stars, the Man-child, the Firstfruits, the Harvest, and Jasper and Other Precious Stones",
+    "verseIds": [31, 32, 33]
+  },
+  {
+    "label": "Message Twelve",
+    "title": "The Bridegroom, the Maturity of the Bride, and Being a Warrior to Defeat God’s Enemy",
+    "verseIds": [34, 35, 36]
+  }
+];

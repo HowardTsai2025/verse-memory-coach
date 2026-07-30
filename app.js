@@ -159,13 +159,29 @@ function renderDashboard(){
   });
   $("#dailyHint").textContent=mastered===0?"先從系統挑選的基礎題開始，答錯的經節會更快再次出現。":`目前已有 ${mastered} 節達到熟練；今天優先複習較弱與較久未練的內容。`;
   $("#practiceBtn").textContent=Object.values(progress).every(x=>x.attempts===0)?"開始程度診斷":"開始今日練習";
-  $("#verseGrid").innerHTML=VERSES.map(v=>`<button type="button" class="verse-dot" data-verse-id="${v.id}" data-level="${progress[v.id].level}" aria-label="查看${escapeHtml(getVerseReference(v))}完整經文">${escapeHtml(getVerseReference(v))}</button>`).join("");
+  const topics=state.paper==="D"?window.ENGLISH_VERSE_TOPICS:window.VERSE_TOPICS;
+  $("#verseGrid").lang=state.paper==="D"?"en":"zh-Hant";
+  $("#verseGrid").innerHTML=topics.map(topic=>{
+    const verseButtons=topic.verseIds.map(verseId=>{
+      const verse=VERSES.find(item=>item.id===verseId);
+      return `<button type="button" class="verse-dot" data-verse-id="${verse.id}" data-level="${progress[verse.id].level}" aria-label="查看${escapeHtml(getVerseReference(verse))}完整經文">${escapeHtml(getVerseReference(verse))}</button>`;
+    }).join("");
+    return `<section class="verse-topic" aria-labelledby="topic-${state.paper}-${topic.verseIds[0]}">
+      <h4 id="topic-${state.paper}-${topic.verseIds[0]}" class="verse-topic-heading">
+        <span class="verse-topic-label">${escapeHtml(topic.label)}</span>
+        <span class="verse-topic-title">${escapeHtml(topic.title)}</span>
+      </h4>
+      <div class="verse-topic-grid">${verseButtons}</div>
+    </section>`;
+  }).join("");
   save();
 }
 function showVerseDialog(verseId){
   const verse=VERSES.find(item=>item.id===Number(verseId));
   if(!verse)return;
-  $("#verseDialogLesson").textContent=state.paper==="D"?"英文經文":verse.lesson;
+  const topics=state.paper==="D"?window.ENGLISH_VERSE_TOPICS:window.VERSE_TOPICS;
+  const topic=topics.find(item=>item.verseIds.includes(verse.id));
+  $("#verseDialogLesson").textContent=topic?`${topic.label}｜${topic.title}`:(state.paper==="D"?"英文經文":verse.lesson);
   $("#verseDialogReference").textContent=getVerseReference(verse);
   $("#verseDialogText").textContent=getVerseText(verse);
   $("#verseDialog").showModal();
